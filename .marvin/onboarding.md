@@ -99,7 +99,7 @@ Last updated: {TODAY'S DATE}
 
 ### Step 4: Quick Launch Shortcut (Optional)
 
-Ask: "Would you like to be able to start me by just typing `marvin` from anywhere on your computer? It's a quick shortcut that makes it easier to open me up."
+Ask: "Would you like to be able to start me by just typing `marvin` anywhere in the terminal? It's a quick shortcut that makes it easier to open me up."
 
 If yes:
 > "Great! I'll set that up for you. Just run this command - you can copy and paste it:"
@@ -134,24 +134,33 @@ If yes, ask which ones they use and guide them:
 If they say no or want to skip:
 > "No problem! We can always add these later. Just ask me anytime - 'Hey MARVIN, help me connect to Google Calendar' - and I'll walk you through it."
 
-### Step 6: Explain the Commands
+### Step 6: Explain the Daily Workflow
 
-Before their first session, walk them through what they can do:
+Explain how a typical day with MARVIN works:
 
-> "Before we dive in, let me show you the commands you can use with me:"
+> "Here's how we'll work together each day:"
+>
+> **Start your day:** Type `/marvin` and I'll give you a briefing - your priorities, what's on deck, and anything you need to know.
+>
+> **Work through your day:** Just talk to me naturally. Tell me what you're working on, ask questions, have me help with tasks.
+>
+> **Save progress as you go:** If you finish something or want to capture what you've done, type `/update`. This saves your progress to today's session log without ending our conversation. Great for when you're switching tasks or want to make sure I remember something important.
+>
+> **End your day:** Type `/end` when you're done. I'll summarize everything we covered and save it so I remember next time.
+>
+> "Think of `/marvin` and `/end` as bookends for your work session. Everything in between is just conversation."
+
+Then show the full command list:
 
 | Command | What It Does |
 |---------|--------------|
-| `/marvin` | **Start your day** - I'll give you a briefing with your priorities and what's on deck |
-| `/end` | **End your session** - I'll save everything we discussed so I remember next time |
-| `/update` | **Quick save** - Checkpoint your progress without ending the session |
-| `/report` | **Weekly report** - I'll summarize what you accomplished this week |
-| `/commit` | **Git commits** - I'll review your code changes and help write good commit messages |
-| `/code` | **Open in IDE** - Opens this folder in Cursor, VS Code, or your preferred editor |
-| `/help` | **Get help** - See all commands and available integrations |
-
-Then explain:
-> "The most important ones to remember are `/marvin` to start and `/end` to finish. Everything in between is just natural conversation - ask me anything, tell me what you're working on, or have me help with tasks."
+| `/marvin` | Start your day with a briefing |
+| `/end` | End your session and save everything |
+| `/update` | Save progress mid-session (without ending) |
+| `/report` | Generate a weekly summary of your work |
+| `/commit` | Review code changes and create git commits |
+| `/code` | Open this folder in your IDE |
+| `/help` | See all commands and integrations |
 
 ### Step 7: Explain How I Work
 
