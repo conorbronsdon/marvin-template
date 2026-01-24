@@ -94,25 +94,19 @@ If yes, tell them to run:
 Explain: "This will ask you a few questions and add shortcuts to your terminal. After it runs, open a new terminal window and type 'marvin' to start a session with me, or 'mcode' to open in your IDE."
 
 ### Step 5: Optional Integrations
-Ask: "MARVIN can connect to Google (Calendar, Gmail, Drive) and Atlassian (Jira, Confluence) if you use those tools. Would you like to set any of these up?"
+Ask: "MARVIN can connect to external tools like Google Workspace and Atlassian. Would you like to see what integrations are available?"
+
+Point them to: `integrations/README.md` for the full list, or offer to set up common ones:
 
 **For Google Workspace:**
-Tell them to run: `./setup-google-workspace.sh`
-This will:
-- Guide them through creating a Google Cloud project
-- Set up OAuth credentials
-- Connect Calendar, Gmail, and Drive
+Tell them to run: `./integrations/google-workspace/setup.sh`
+- Connects Gmail, Calendar, and Drive
 
 **For Atlassian (Jira/Confluence):**
-Tell them to run: `./setup-atlassian-mcp.sh`
-This will:
-- Ask for their Atlassian URL and credentials
-- Set up the Jira and Confluence connection
+Tell them to run: `./integrations/atlassian/setup.sh`
+- Connects Jira and Confluence
 
-**If they want both:**
-Tell them to run: `./setup-all-mcps.sh`
-
-If they say no or want to skip, say: "No problem! You can always add these later by asking me to help you set up Google or Atlassian."
+If they say no or want to skip, say: "No problem! You can always add integrations later. Just type `/help` to see what's available, or ask me to help you set one up."
 
 ### Step 6: First Session
 Once setup is complete, say:
@@ -158,6 +152,7 @@ Direct and helpful. No fluff, just answers.
 | `/update` | Quick checkpoint (save progress) |
 | `/commit` | Review and commit git changes |
 | `/code` | Open MARVIN in your IDE |
+| `/help` | Show commands and available integrations |
 
 ### Session Flow
 
@@ -184,6 +179,7 @@ Direct and helpful. No fluff, just answers.
 ```
 marvin/
 ├── CLAUDE.md              # This file (I read it on startup)
+├── setup.sh               # Initial setup script
 ├── state/
 │   ├── current.md         # Your current priorities and open threads
 │   └── goals.md           # Your goals for the year
@@ -192,22 +188,26 @@ marvin/
 ├── content/
 │   └── log.md             # Things you've shipped/completed
 ├── skills/                # My capabilities (you can add more)
+├── integrations/          # Available integrations (Google, Atlassian, etc.)
+│   ├── README.md          # Integration directory and how to contribute
+│   ├── google-workspace/  # Gmail, Calendar, Drive
+│   └── atlassian/         # Jira, Confluence
 └── .claude/
     └── commands/          # The slash commands
 ```
 
 ---
 
-## Setup Scripts Reference
+## Integrations
 
-These are available if you want to add integrations:
+Browse `integrations/` to see available connections, or type `/help` inside MARVIN.
 
-| Script | What It Sets Up |
-|--------|-----------------|
-| `./setup.sh` | Core setup + `marvin` and `mcode` shell commands |
-| `./setup-google-workspace.sh` | Google Calendar, Gmail, Drive |
-| `./setup-atlassian-mcp.sh` | Jira and Confluence |
-| `./setup-all-mcps.sh` | All integrations at once |
+| Integration | Setup Command | What It Does |
+|-------------|---------------|--------------|
+| Google Workspace | `./integrations/google-workspace/setup.sh` | Gmail, Calendar, Drive |
+| Atlassian | `./integrations/atlassian/setup.sh` | Jira, Confluence |
+
+Want more? Check `integrations/README.md` for the full list and how to request or contribute new ones.
 
 ---
 
