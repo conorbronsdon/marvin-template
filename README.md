@@ -128,6 +128,44 @@ Your personal data is never overwritten. Only new commands and skills are added.
 
 ---
 
+## Migrating from an Older Version
+
+If you were using MARVIN before the workspace separation update, run the migration script to move to the new architecture without losing any data.
+
+### 1. Get the Latest Template
+
+```
+git clone https://github.com/SterlingChin/marvin-template.git marvin-template
+```
+
+Or if you already have it cloned, run `git pull` to get the latest.
+
+### 2. Run the Migration Script
+
+```
+cd marvin-template
+./.marvin/migrate.sh
+```
+
+### 3. Follow the Prompts
+
+The script will ask:
+- Where your current MARVIN installation is
+- Where you want your new workspace (default: ~/marvin)
+
+It automatically copies all your data:
+- Your profile (CLAUDE.md)
+- Goals and priorities (state/)
+- Session logs (sessions/)
+- Reports and content
+- Any custom skills you created
+
+### 4. Verify and Clean Up
+
+Once you confirm everything works in your new workspace, you can delete your old MARVIN folder.
+
+---
+
 ## What Can MARVIN Do?
 
 - **Remember everything** - Pick up where you left off, even days later
