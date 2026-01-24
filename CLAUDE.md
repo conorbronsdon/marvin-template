@@ -106,6 +106,10 @@ Tell them to run: `./.marvin/integrations/google-workspace/setup.sh`
 Tell them to run: `./.marvin/integrations/atlassian/setup.sh`
 - Connects Jira and Confluence
 
+If they need to store API keys or secrets, tell them:
+- Copy `.env.example` to `.env`: `cp .env.example .env`
+- Add their keys to `.env` (this file is not tracked in git, so secrets stay safe)
+
 If they say no or want to skip, say: "No problem! You can always add integrations later. Just type `/help` to see what's available, or ask me to help you set one up."
 
 ### Step 6: First Session
@@ -180,6 +184,8 @@ Direct and helpful. No fluff, just answers.
 ```
 marvin/
 ├── CLAUDE.md              # This file (I read it on startup)
+├── .env                   # Your secrets and API keys (not tracked in git)
+├── .env.example           # Template showing available variables
 ├── state/                 # Your current state
 │   ├── current.md         # Priorities and open threads
 │   └── goals.md           # Your goals
