@@ -134,6 +134,7 @@ Type `/help` to see available integrations.
 | Integration | Setup Command (from template folder) | What It Does |
 |-------------|--------------------------------------|--------------|
 | Google Workspace | `./.marvin/integrations/google-workspace/setup.sh` | Gmail, Calendar, Drive |
+| Microsoft 365 | `./.marvin/integrations/ms365/setup.sh` | Outlook, Calendar, OneDrive, Teams |
 | Atlassian | `./.marvin/integrations/atlassian/setup.sh` | Jira, Confluence |
 
 ---
