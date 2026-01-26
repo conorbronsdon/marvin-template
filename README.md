@@ -173,7 +173,35 @@ Once you confirm everything works in your new workspace, you can delete your old
 - **Manage tasks** - Keep a running to-do list that persists
 - **Give briefings** - Start each day knowing what matters
 - **Push back** - MARVIN is a thought partner, not a yes-man
-- **Connect to your tools** - Google Calendar, Gmail, Jira, and more (optional)
+- **Connect to your tools** - Integrations for Google, Microsoft, Atlassian, Telegram, and more
+
+---
+
+## Integrations
+
+MARVIN can connect to your favorite tools:
+
+| Integration | What It Does | Setup |
+|-------------|--------------|-------|
+| [Google Workspace](.marvin/integrations/google-workspace/) | Gmail, Calendar, Drive | `/help` then follow prompts |
+| [Microsoft 365](.marvin/integrations/ms365/) | Outlook, Calendar, OneDrive, Teams | `/help` then follow prompts |
+| [Atlassian](.marvin/integrations/atlassian/) | Jira, Confluence | `/help` then follow prompts |
+| [Telegram](.marvin/integrations/telegram/) | Chat with MARVIN from your phone | Requires Python setup |
+| [Parallel Search](.marvin/integrations/parallel-search/) | Web search capabilities | `/help` then follow prompts |
+
+More integrations coming soon! Check `.marvin/integrations/` for the full list and setup instructions.
+
+---
+
+## Contributing
+
+MARVIN is open to contributions! Whether you want to add a new integration, fix a bug, or improve documentation:
+
+1. **Fork the repo** and create a branch
+2. **Follow the guidelines** in [.marvin/integrations/CLAUDE.md](.marvin/integrations/CLAUDE.md)
+3. **Submit a PR** - we review all contributions
+
+See the [integrations README](.marvin/integrations/README.md) for detailed contribution guidelines.
 
 ---
 
