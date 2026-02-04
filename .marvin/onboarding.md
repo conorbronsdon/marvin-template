@@ -52,11 +52,15 @@ cat .onboarding-pending-auth
 ```
 
 **Greet them warmly:**
-> "Welcome back, {name}! You're almost done - just need to connect your accounts now. This is the last step, I promise.
->
-> Type `/mcp` right here. You should see your integrations listed."
+> "Welcome back, {name}! You're almost done - just need to connect your accounts now. This is the last step, I promise."
 
-**Wait for them to type `/mcp`**, then guide them through each integration:
+---
+
+### For Atlassian and MS365 (need `/mcp` auth)
+
+> "Type `/mcp` right here. You should see your integrations listed."
+
+**Wait for them to type `/mcp`**, then guide them through each:
 
 > "Great! Now:
 > 1. Select '{integration_name}' from the list
@@ -66,18 +70,52 @@ cat .onboarding-pending-auth
 >
 > Let me know when you're done!"
 
+---
+
+### For Google Workspace (authenticates on first use)
+
+Google authenticates automatically when you first use it - no `/mcp` needed.
+
+> "Let me test Google real quick..."
+
+Try: "What's on my Google Calendar today?" or any Google Workspace tool.
+
+A browser window will open for them to log in. After they authenticate, the request will complete.
+
+---
+
+### For Slack (uses token directly)
+
+Slack uses the API token they provided - no additional auth needed.
+
+> "Let me test Slack real quick..."
+
+Try: "List my Slack channels" or any Slack tool.
+
+If it works, they're connected. If not, the token might be wrong - ask them to verify it.
+
+---
+
+### Testing Each Integration
+
 **After they confirm each integration:**
 - Ask: "Did it work? Let me test it real quick..."
 - Try a simple test:
-  - **Atlassian:** "What Jira projects do you have access to?" or use an Atlassian MCP tool
-  - **MS365:** "What's on your calendar today?" or use an MS365 MCP tool
+  - **Atlassian:** "What Jira projects do you have access to?"
+  - **MS365:** "What's on your Outlook calendar today?"
+  - **Google:** "What's on my Google Calendar today?"
+  - **Slack:** "List my Slack channels"
 - If it works: "Perfect! {Integration} is connected."
 - If it fails: See troubleshooting below.
 
-**Troubleshooting (if auth doesn't work):**
+---
+
+### Troubleshooting
+
+**Atlassian/MS365 (if `/mcp` auth doesn't work):**
 
 1. "Let's try `/mcp` again - do you see {integration} in the list?"
-   - If NO: The MCP wasn't added. Re-run the `claude mcp add` command for that integration, then restart again.
+   - If NO: The MCP wasn't added. Re-run the `claude mcp add` command, then restart again.
    - If YES but not authenticated: Select it and try 'Authenticate' again.
 
 2. "Sometimes the browser auth doesn't complete properly. Try these steps:"
@@ -86,19 +124,34 @@ cat .onboarding-pending-auth
    - Complete the login in the new browser window
    - Wait for the success message before coming back
 
-3. If still stuck: "Let's skip this for now and try again later. Just ask me 'help me connect to {integration}' anytime."
+**Google (if browser auth doesn't work):**
 
-**When all integrations are authenticated:**
+1. Check that the OAuth credentials are correct
+2. Make sure the Gmail, Calendar, and Drive APIs are enabled in Google Cloud Console
+3. Try the request again - it should open a new browser window
+
+**Slack (if commands fail):**
+
+1. Verify the token starts with `xoxp-` (not `xoxb-`)
+2. Check that all required scopes were added to the Slack app
+3. Try reinstalling the Slack app to your workspace and getting a fresh token
+
+**If still stuck:** "Let's skip this for now and try again later. Just ask me 'help me connect to {integration}' anytime."
+
+---
+
+### When Done
 
 1. Delete the pending auth file:
    ```bash
    rm .onboarding-pending-auth
    ```
 
-2. Celebrate briefly:
-   > "Awesome! All your integrations are connected. Let me finish telling you how we'll work together..."
+2. Celebrate:
+   > "Awesome! All your integrations are connected. You're all set!"
 
-3. Continue to Step 8 (Explain the Daily Workflow) to finish onboarding
+3. Give them their first briefing:
+   > "Type `/start` and let's get to work!"
 
 ---
 
@@ -357,7 +410,14 @@ Tell them about the template first:
 > "One more thing before we wrap up: **Keep the template folder you downloaded.** That's where I get updates from. When new features or integrations are added, you can run `/sync` to pull them into your workspace. Don't worry - your personal data is safe in your MARVIN folder and won't be overwritten."
 
 Then ask about integrations:
-> "Do you use Jira, Confluence, or Microsoft 365 (Outlook, Teams)? I can connect to those so I can check your calendar, help with emails, or look up tickets for you."
+> "I can connect to several tools to help you out. Which of these do you use?"
+>
+> - **Jira/Confluence** - Track tickets, search documentation
+> - **Microsoft 365** - Outlook email, calendar, OneDrive, Teams
+> - **Google Workspace** - Gmail, Google Calendar, Google Drive
+> - **Slack** - Search messages, send updates
+>
+> "Just tell me which ones you'd like to connect, or say 'none' to skip for now."
 
 **If they say no or skip:**
 
@@ -365,24 +425,52 @@ Then ask about integrations:
 
 Move directly to Step 10.
 
-**If they say yes**, collect all integrations first, then set them all up:
+**If they say yes**, collect preferences for each integration they want:
 
 ---
 
 #### Collecting Integration Preferences
 
-Ask which integrations they want and gather configuration for each:
-
-**For Jira/Confluence (Atlassian):**
+**For Jira/Confluence (Atlassian):** *(Easy - just needs login)*
 - Ask: "Should Jira be available in all your projects, or just this one?" (all = user scope, this one = project scope)
 
-**For Microsoft 365:**
+**For Microsoft 365:** *(Easy - just needs login)*
 - Ask: "Is this a work/school account or personal (outlook.com)?" (work = `--org-mode`)
 - Ask: "All MS365 tools or just essentials (mail, calendar, files)?" (essentials = `--preset mail,calendar,files`)
 - Ask: "Available in all projects or just this one?" (all = user scope)
 
-**For Google Workspace:**
-> "Google Workspace requires some extra setup that's more technical. Let's skip that for now - the other integrations should cover what you need! You can always add it later."
+**For Google Workspace:** *(Needs OAuth credentials)*
+> "Google needs OAuth credentials to connect. Do you already have a Google Cloud project with OAuth set up?"
+
+- **If yes:** Ask for their Client ID and Client Secret
+- **If no:**
+  > "No worries! Setting up Google OAuth takes about 5 minutes. Here's what you'll need to do:
+  >
+  > 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+  > 2. Create a project (or use an existing one)
+  > 3. Enable the Gmail, Calendar, and Drive APIs
+  > 4. Create OAuth credentials (Desktop app type)
+  > 5. Copy the Client ID and Client Secret
+  >
+  > Want me to walk you through it now, or should we skip Google for now and add it later?"
+
+  If they want to do it now, guide them step by step. If not, skip Google.
+
+**For Slack:** *(Needs API token)*
+> "Slack needs an API token to connect. Do you already have a Slack app with a User Token?"
+
+- **If yes:** Ask for their token (starts with `xoxp-`)
+- **If no:**
+  > "No problem! Creating a Slack app takes about 5 minutes. Here's what you'll need:
+  >
+  > 1. Go to [Slack API](https://api.slack.com/apps)
+  > 2. Create a new app for your workspace
+  > 3. Add the permissions (I'll tell you which ones)
+  > 4. Install it and copy the User OAuth Token
+  >
+  > Want me to walk you through it now, or should we skip Slack for now?"
+
+  If they want to do it now, guide them through creating the Slack app and getting the token. If not, skip Slack.
 
 ---
 
@@ -406,11 +494,28 @@ claude mcp add ms365 -s user -- npx -y @softeria/ms-365-mcp-server --org-mode
 # Add "--preset mail,calendar,files" for essentials only
 ```
 
+**Google Workspace:** *(Only if they provided credentials)*
+```bash
+claude mcp remove google-workspace 2>/dev/null || true
+claude mcp add google-workspace -s user \
+    --env GOOGLE_OAUTH_CLIENT_ID="{their_client_id}" \
+    --env GOOGLE_OAUTH_CLIENT_SECRET="{their_client_secret}" \
+    -- uvx workspace-mcp --tools gmail drive calendar docs sheets slides
+```
+
+**Slack:** *(Only if they provided a token)*
+```bash
+claude mcp remove slack 2>/dev/null || true
+claude mcp add slack -s user \
+    -e SLACK_MCP_XOXP_TOKEN="{their_token}" \
+    -- npx -y slack-mcp-server@latest --transport stdio
+```
+
 ---
 
 #### Creating the Pending Auth File
 
-After adding all integrations, create a file to track what needs authentication:
+After adding integrations, create a file to track what needs `/mcp` authentication:
 
 ```bash
 # In the user's workspace (e.g., ~/marvin)
@@ -423,13 +528,15 @@ ms365
 EOF
 ```
 
-Only include the integrations they actually requested.
+**Note:** Only Atlassian and MS365 need `/mcp` authentication after restart. Google and Slack authenticate on first use (Google opens browser, Slack uses the token directly).
+
+Only include integrations that actually need `/mcp` auth.
 
 ---
 
 #### Continue to Step 10
 
-After adding integrations and creating the pending auth file, continue to Step 10.
+After adding integrations (and creating the pending auth file if needed), continue to Step 10.
 
 ### Step 10: Wrap Up and Restart
 
