@@ -24,6 +24,8 @@ Compare the template's files with the user's workspace:
 
 **Files to sync:**
 - `.claude/commands/` - Slash commands
+- `.claude/agents/` - Subagent definitions
+- `.claude/skills/` - Reusable skills
 
 **Files to NEVER sync (user's data):**
 - `state/` - User's goals and current state
@@ -35,7 +37,7 @@ Compare the template's files with the user's workspace:
 
 ### 3. Identify Changes
 
-For each file in the template's `.claude/commands/`:
+For each file in the template's `.claude/commands/`, `.claude/agents/`, and `.claude/skills/`:
 - If it doesn't exist in the workspace: NEW
 - If it exists but differs: CONFLICT (user's version wins)
 - If it's identical: UNCHANGED
@@ -61,7 +63,7 @@ No changes to your data (goals, sessions, etc.) - those are always safe.
 
 ### 5. Apply Updates
 
-Ask: "Would you like me to add the new commands/skills?"
+Ask: "Would you like me to add the new commands/agents/skills?"
 
 If yes, copy the NEW files only. Never overwrite existing files.
 

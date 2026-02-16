@@ -108,10 +108,9 @@ print_header "Migrating..."
 # Create workspace directory
 mkdir -p "$WORKSPACE_DIR"
 
-# Copy latest template files first (commands, skills structure)
+# Copy latest template files first (commands, agents, skills structure)
 echo "Copying latest template files..."
 cp -r "$TEMPLATE_DIR/.claude" "$WORKSPACE_DIR/" 2>/dev/null || true
-cp -r "$TEMPLATE_DIR/skills" "$WORKSPACE_DIR/" 2>/dev/null || true
 [[ -f "$TEMPLATE_DIR/.env.example" ]] && cp "$TEMPLATE_DIR/.env.example" "$WORKSPACE_DIR/"
 
 # Create directories
@@ -170,6 +169,28 @@ if [[ -d "$CURRENT_MARVIN/.claude/commands" ]]; then
     done
 fi
 
+# Custom agents (check for any that aren't in template)
+if [[ -d "$CURRENT_MARVIN/.claude/agents" ]]; then
+    for agent_file in "$CURRENT_MARVIN/.claude/agents/"*.md; do
+        agent_name=$(basename "$agent_file")
+        if [[ ! -f "$TEMPLATE_DIR/.claude/agents/$agent_name" ]]; then
+            cp "$agent_file" "$WORKSPACE_DIR/.claude/agents/"
+            print_color "$GREEN" "  Copied custom agent: $agent_name"
+        fi
+    done
+fi
+
+# Custom skills (check for any that aren't in template)
+if [[ -d "$CURRENT_MARVIN/.claude/skills" ]]; then
+    for skill_file in "$CURRENT_MARVIN/.claude/skills/"*.md; do
+        skill_name=$(basename "$skill_file")
+        if [[ ! -f "$TEMPLATE_DIR/.claude/skills/$skill_name" ]]; then
+            cp "$skill_file" "$WORKSPACE_DIR/.claude/skills/"
+            print_color "$GREEN" "  Copied custom skill: $skill_name"
+        fi
+    done
+fi
+
 # Create .marvin-source file pointing to template
 echo "$TEMPLATE_DIR" > "$WORKSPACE_DIR/.marvin-source"
 print_color "$GREEN" "  Created: .marvin-source"
@@ -195,7 +216,7 @@ echo "Your MARVIN workspace is now at: $WORKSPACE_DIR"
 echo ""
 echo "Your data has been preserved:"
 echo "  - Profile, goals, sessions, reports, content"
-echo "  - Any custom skills you created"
+echo "  - Any custom commands, agents, or skills you created"
 echo ""
 print_color "$CYAN" "Next steps:"
 echo "  1. Open your new workspace: cd $WORKSPACE_DIR && claude"

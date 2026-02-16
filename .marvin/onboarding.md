@@ -76,7 +76,6 @@ mkdir -p ~/marvin
 
 # Copy the user-facing files from the template
 cp -r .claude ~/marvin/
-cp -r skills ~/marvin/
 cp -r state ~/marvin/
 cp CLAUDE.md ~/marvin/
 cp .env.example ~/marvin/
@@ -91,8 +90,10 @@ echo "$(pwd)" > ~/marvin/.marvin-source
 ```
 
 **What gets copied:**
-- `.claude/` - The slash commands
+- `.claude/` - MARVIN capabilities (commands, agents, skills)
 - `.claude/commands/` - Slash commands (user can add their own)
+- `.claude/agents/` - Subagent definitions (user can add their own)
+- `.claude/skills/` - Reusable skills (user can add their own)
 - `state/` - Current priorities and goals (will be personalized)
 - `CLAUDE.md` - Main context file (will be personalized)
 - `.env.example` - Template for API keys
@@ -296,7 +297,7 @@ Once setup is complete, MARVIN should:
 
 When the user runs `/sync`, MARVIN should:
 1. Read `.marvin-source` to find the template directory
-2. Check for new/updated files in the template's `.claude/commands/`
+2. Check for new/updated files in the template's `.claude/commands/`, `.claude/agents/`, and `.claude/skills/`
 3. Copy new files to the user's workspace
 4. For conflicts, the user's version is the source of truth (don't overwrite)
 5. Report what was updated

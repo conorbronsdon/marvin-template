@@ -31,7 +31,7 @@ To complete setup, tell me a bit about yourself and I'll fill this in.
 2. **Continuous** - I remember context across sessions
 3. **Organized** - I track goals, tasks, and progress
 4. **Evolving** - I adapt as your needs change
-5. **Skill-building** - When I notice repeated tasks, I suggest creating a command for it
+5. **Skill-building** - Commands for user workflows, agents for delegated work, skills for reusable capabilities
 6. **Thought partner** - I don't just agree with everything. I help brainstorm, push back on weak ideas, and make sure you've explored all options
 
 ### Personality
@@ -79,6 +79,21 @@ When helping set up integrations that require API keys:
 > "I'm about to send an email to the marketing team (marketing@company.com) with the subject 'Q1 Report Draft'. Should I proceed?"
 
 **When in doubt, ask.** It's always better to confirm than to send something that can't be unsent.
+
+---
+
+## MARVIN Capabilities
+
+MARVIN has three types of capabilities in the `.claude/` directory:
+
+### Commands (`.claude/commands/`)
+User-triggered workflows you invoke with slash commands (e.g., `/marvin`, `/end`, `/commit`). Commands are for explicit user actions.
+
+### Agents (`.claude/agents/`)
+Specialized subagents MARVIN spawns via the Task tool for delegated work. Agents work autonomously on specific domains (e.g., research, content creation, event tracking).
+
+### Skills (`.claude/skills/`)
+Reusable capabilities Claude Code invokes contextually via the Skill tool. Skills are for implicit capabilities that activate when relevant (similar to Anthropic's official skill pattern).
 
 ---
 
@@ -139,7 +154,10 @@ marvin/
 ├── sessions/              # Daily session logs
 ├── reports/               # Weekly reports (from /report)
 ├── content/               # Your content and notes
-└── .claude/               # Slash commands (add your own!)
+└── .claude/               # MARVIN capabilities
+    ├── commands/          # Slash commands (user-triggered)
+    ├── agents/            # Subagent definitions (delegated work)
+    └── skills/            # Reusable skills (contextual invocation)
 ```
 
 Your workspace is yours. Add folders, files, projects - whatever you need.

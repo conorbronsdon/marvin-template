@@ -296,11 +296,10 @@ ${PERSONALITY_DESC}
 \`\`\`
 marvin/
 ├── CLAUDE.md              # This file (read on startup)
-├── .claude/               # Slash commands
-│   ├── marvin/            # Session start
-│   ├── end/               # Session end
-│   ├── update/            # Quick checkpoint
-│   └── commit/            # Git commits
+├── .claude/               # MARVIN capabilities
+│   ├── commands/          # Slash commands (user-triggered)
+│   ├── agents/            # Subagent definitions (delegated work)
+│   └── skills/            # Reusable skills (contextual invocation)
 ├── state/
 │   ├── current.md         # Current priorities and open threads
 │   └── goals.md           # Your goals
